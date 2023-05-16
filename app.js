@@ -24,9 +24,7 @@ app.use((req, res, next ) => {
  });
 
  //GET SED-PRODUCT
-app.use('/add-product', (req, res,next)=>{
- if(req.method === "POST") return next();
-
+app.get('/add-product', (req, res,next)=>{
   console.log("👣SIRVIENDO EL FORMULARIO");
 
     //sirviendo el formulario 
@@ -42,7 +40,7 @@ app.use('/add-product', (req, res,next)=>{
 });
 
 //POST /ADD-PRODUCT
-app.use('/add-product', (req, res)=>{
+app.post('/add-product', (req, res)=>{
   //realizando extraccion de los datos en la peticion 
   for(const prop in req.body){
     console.log(`PROP: ${prop} : ${req.body[prop]}`);
