@@ -1,5 +1,6 @@
 // Importando el enrutador de express
 import { Router } from 'express';
+import { get } from 'http';
 
 // Importando el gestor de rutas
 import path from 'path';

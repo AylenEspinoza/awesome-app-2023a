@@ -1,6 +1,9 @@
 // Importando el enrutador de express
 import { Router } from 'express';
 
+import httpStatus from 'http-status';
+
+
 // Creando una instancia del enrutador de express
 const router = Router();
 
@@ -30,3 +33,5 @@ router.post('/add-product', (req, res) => {
     console.log(req.body);
     res.redirect('/');
   });
+
+ 
