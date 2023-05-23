@@ -17,14 +17,13 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 // Se agrega ruta de administrador
-app.use(adminRouter);
+app.use('/admin',adminRouter);
 // Se agrega ruta shop
 app.use(shopRouter);
 //Registrando el middleware para error 404
 app.use((req, res)=>{
   res.status(httpStatus.NOT_FOUND).sendFile(path.resolve('views', 'error.html'));
   });
-
 
 // Creando el servidor
 // const server = http.createServer(app);

@@ -1,9 +1,6 @@
 // Importando el enrutador de express
 import { Router } from 'express';
 
-import httpStatus from 'http-status';
-
-
 // Creando una instancia del enrutador de express
 const router = Router();
 
