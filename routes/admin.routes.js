@@ -10,12 +10,15 @@ const router = Router();
 // Creando datos en la memorian volatil
 export const products = [];
 
-// GET /add-product
-router.get('/add-product', (req, res) => {
-  console.log("📢 Sirviendo la ruta '/'");
-  console.log(`ROOT_DIR: ${ROOT_DIR}`);
-  res.sendFile(path.join(ROOT_DIR, 'views', 'add-product.html'));
-});
+// GET /admin/add-product
+router.get('/add-product', (req, res, next) => {
+  // Servimos el formulario
+  console.log("📢 Sirviendo formulario...");
+  res.render('add-product', {
+    addProduct: `active`,
+   viewStyle: '/css/product.css',
+   docTitle: "Add Product"});
+});;
 
 // POST /add-product
 router.post('/add-product', (req, res) => {

@@ -13,7 +13,7 @@ router.get('/', (req, res)=>{
   // Mostrando productos en memoria
   console.log(products);
   console.log("📢 Sirviendo la ruta '/'");
-  res.sendFile(path.resolve('views','shop.html'));
+  res.render('shop', {shop: 'active', docTitle:"shop"});
 });
 
 // GET /about
