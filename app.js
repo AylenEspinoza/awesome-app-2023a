@@ -1,61 +1,80 @@
-//importando expressjs
+// Importando Express
 import express from 'express';
-//Importando http-status
 import httpStatus from 'http-status';
 
-//importando Engine
+// Template Engine
 import { engine } from 'express-handlebars';
 
-//Importando Path
-import path from 'path';
-//Importando el enrutador
+// Importando el enrutador
 import adminRouter from './routes/admin.routes.js';
 import shopRouter from './routes/shop.routes.js';
 
-//Importando Root_DIR
-import { ROOT_DIR } from './helpers/paths.js';
+// Importando el directorio raiz
+import { ROOT_DIR } from './helpers/paths.js'
 
-//Crear una instancia de express
+// Se importa path
+import path from 'path';
+
+// Creando la instancia de express
+// que basicamente es un middleware
 const app = express();
 
-//Creacion de instancia del template engine
+// Se crea instancia del template engine
 const hbsTemplateEngine = engine({
-    //Extension de los archivos de plantillas
-    extname: '.hbs',
-    //Nombre del diseño por defeccto
-    defaultLayout: 'main',
+  // Extensión de los archivos de plantillas
+  extname: '.hbs',
+  // Nombre del diseño por defecto
+  defaultLayout: 'main',
 });
 
-//TE1. Se registra en la instancia de express
+// TE1. Se registra en la instancia de express
 app.engine('hbs', hbsTemplateEngine);
 
-//TE2. Se selecciona el template engine
+// TE2.Se selecciona el Template Engine
 app.set('view engine', 'hbs');
 
-//TE3. Se establece la ruta de las vistas 
+// TE3. Se establece la ruta de las vistas
 app.set('views', path.resolve('views'));
 
-//Middleware de proceso de bosy-parser
+// Se registra el middleware del body-parser
 app.use(express.urlencoded({ extended: true }));
 
-//Se registra el Middleware para el servidor de archivos estaticos
+// Se registra el middleware para el servidor
+// de archivos estaticos
 app.use(express.static(path.join(ROOT_DIR, 'public')));
 
 // Se agrega ruta de administrador
 app.use('/admin', adminRouter);
 // Se agrega ruta shop
 app.use(shopRouter);
-//Registrando Middleware Para el error 404
-app.use((req, res) => {
-    res.status(httpStatus.NOT_FOUND).sendFile(path.resolve('views', '404.html'));
-});
 
-//Definir puertos
+// Registrando el middleware para el error
+// 404
+//app.use((req, res, next) => {
+  //res.status(httpStatus.NOT_FOUND)
+  //.sendFile(path.resolve('views','error.html'))
+//});
+// Ruta de ejemplo que lanza un error 404
+app.get('/pagina-no-encontrada', (req, res, next) => {
+    const error = new Error('Página no encontrada');
+    next(error);
+  });
+  
+  // Ruta de ejemplo que lanza un error 500
+  app.get('/error', (req, res, next) => {
+    const error = new Error('Error en el servidor');
+    next(error);
+  });
+  
+  // Middleware para manejar los errores
+  app.use(httpErrorController.error404);
+  app.use(httpErrorController.errorHandler);
+
+// Definiendo puertos
 const port = 3000;
-const ip = "0.0.0.0";
+const ip = "0.0.0.0"
 
-//Arrancando el server
-app.listen(port, ip, (err) => {
-    console.log("📣 Sirviendo en http://localhost:3000");
-    //console.log(`📣 Sirviendo en http://${process.env.IP}:${process.env.PORT}`);
-})
+// Arrancando el servidor
+app.listen(port, ip, () => {
+  console.log(`🤖 Sirviendo en http://localhost:${port}`);
+});
