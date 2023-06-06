@@ -7,22 +7,7 @@ import { getProducts } from '../controllers/products.controller.js'
 const router = Router();
 
 // GET /
-router.get('/', getProducts);
-
-// GET /
-router.get('/', (req, res)=>{
-  // Mostrando productos en memoria
-  console.log(products);
-  console.log("📢 Sirviendo la ruta '/'");
-  res.render('shop', { 
-    shop: 'active', 
-    docTitle:"Shop",
-    viewStyle: '/css/product.css',
-    isProductsListEmpty: products.length === 0,
-    products
-  });
-});
-
+router.get(["/", "/home"], getProducts);
 // GET /about
 router.get('/about', (req, res) => {
   console.log("📢 Sirviendo la ruta '/about'");
